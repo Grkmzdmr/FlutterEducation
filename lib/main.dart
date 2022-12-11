@@ -1,5 +1,7 @@
-import 'package:first_application/presentation/onboarding.dart';
+import 'package:first_application/presentation/onboarding/onboarding.dart';
+
 import 'package:first_application/presentation/resources/color_manager.dart';
+import 'package:first_application/presentation/state_renderer/state_renderer.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +20,11 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(backgroundColor: ColorManager.primary),
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(body: const OnBoardingView()),
+      home: Scaffold(
+          body: StateRenderer(
+        stateRendererType: StateRendererType.POPUP_LOADING_STATE,
+        retryFunction: () {},
+      )),
     );
   }
 }
