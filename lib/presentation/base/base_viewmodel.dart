@@ -9,6 +9,11 @@ abstract class BaseViewModel extends BaseViewModelInputs
 abstract class BaseViewModelInputs {
   void start();
   void dispose();
+  
+
 }
 
-abstract class BaseViewModelOutputs {}
+abstract class BaseViewModelOutputs {
+
+
+}
