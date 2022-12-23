@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
-
+  await initLoginModule();
   runApp(const MyApp());
 }
 
@@ -24,17 +24,14 @@ class MyApp extends StatelessWidget {
     AppPreferences _appPrefs = instance<AppPreferences>();
 
     late bool deger;
-    
 
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(backgroundColor: ColorManager.primary),
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-          body: const SplashView()
-      )  
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(backgroundColor: ColorManager.primary),
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(body: const SplashView()));
   }
 }
