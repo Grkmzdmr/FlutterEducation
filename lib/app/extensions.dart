@@ -10,6 +10,21 @@ extension NonNullString on String? {
   }
 }
 
+extension NonNullInteger on int? {
+  int orZero() {
+    if (this == null) {
+      return 0;
+    } else {
+      return this!;
+    }
+  }
+}
+
+
+
+
+
+
 extension HexColor on Color {
   static Color fromHex(String hexColorString) {
     hexColorString = hexColorString.replaceAll('#', '');
@@ -19,5 +34,3 @@ extension HexColor on Color {
     return Color(int.parse(hexColorString, radix: 16));
   }
 }
-
-

@@ -1,4 +1,7 @@
 import 'package:first_application/app/app_prefs.dart';
+import 'package:first_application/data/data_source/remote_data_source.dart';
+import 'package:first_application/data/network/app_api.dart';
+import 'package:first_application/data/network/dio_factory.dart';
 import 'package:first_application/data/network/repository/repository_impl.dart';
 import 'package:first_application/domain/repository/repository.dart';
 import 'package:first_application/domain/usecases/login_usecase.dart';
@@ -14,11 +17,20 @@ Future<void> initAppModule() async {
 
   instance.registerLazySingleton<SharedPreferences>(() => sharedPref);
 
+  instance.registerLazySingleton<RemoteDataSource>(
+      () => RemoteDataSourceImplementer(instance()));
+
   //APP PREFS
   instance
       .registerLazySingleton<AppPreferences>(() => AppPreferences(instance()));
 
-  instance.registerLazySingleton<Repository>(() => RepositoryImpl());
+  instance.registerLazySingleton<Repository>(() => RepositoryImpl(instance()));
+
+  instance.registerLazySingleton<DioFactory>(() => DioFactory());
+
+  final dio = await instance<DioFactory>().getDio();
+
+  instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio));
 }
 
 //login

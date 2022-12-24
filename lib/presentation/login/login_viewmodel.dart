@@ -16,6 +16,8 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
+  StreamController isUserLoginInSuccessfullyStreamController =
+      StreamController<bool>();
   var loginViewObject = LoginObject("", "");
   LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
@@ -25,6 +27,7 @@ class LoginViewModel extends BaseViewModel
     _usernameStreamController.close();
     _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
+    isUserLoginInSuccessfullyStreamController.close();
   }
 
   @override
@@ -40,11 +43,11 @@ class LoginViewModel extends BaseViewModel
   }
 
   _isPasswordValid(String password) {
-    password.length > 7;
+    return password.length > 3;
   }
 
   _isUsernameValid(String username) {
-    username.length > 5;
+    return username.length > 3;
   }
 
   @override
@@ -52,14 +55,19 @@ class LoginViewModel extends BaseViewModel
     //login butonuna basıldığında ekrana loading popupını getiriyoruz.
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+
+        //_loginUseCase.girişyap ya da kayıtol fonksiyonları gibi düşünülebilir.
     (await _loginUseCase.execute(LoginUseCaseInput(
-            loginViewObject.username, loginViewObject.password)))
+            loginViewObject.username, loginViewObject.password, "deviceId123")))
+        //fold yapısında iki yol var gibi düşünebilirsiniz hatalı olursa left başarılı olursa right
         .fold(
             (failure) => {
                   inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,
                       "Giriş Yaparken Hata Oluştu"))
                 }, (data) {
       inputState.add(ContentState());
+      isUserLoginInSuccessfullyStreamController.add(true);
+      
     });
   }
 

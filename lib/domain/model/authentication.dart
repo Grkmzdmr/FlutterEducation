@@ -2,6 +2,11 @@ class Authentication {
   UserData? userData;
 
   Authentication(this.userData);
+
+
+
+
+
 }
 
 class UserData {
